@@ -1,0 +1,53 @@
+﻿@using Packt.Shared;
+@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Информационная система по учету сотрудников предприятия</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Наименование организации</h1>
+        <p class="lead">
+            В штате сотрудников организаации числиться @Model?.EmployeesCount человек(а).
+        </p>
+        @if (Model is not null)
+        {
+            <h2>Сотрудник</h2>
+
+            <table class="table-bordered">
+                <tr >
+                    <th>ФИО</th>
+                    <th>Дата рождения</th>
+                    <th>Должность</th>
+                    <th>Подразделение</th>
+                </tr>
+                @foreach (var staff in Model.Staffs.OrderBy(s => s.LastName))
+                {
+                    <tr>
+
+                        <td>
+                            <a asp-controller="Home"
+                       asp-action="EmployeeDetail"
+                       asp-route-id="@staff.StaffId"
+                       >
+                                @staff.LastName @staff.FirstName @staff.MiddleName
+                            </a>
+                        </td>
+                        <td>@Html.DisplayFor(m => staff.BirthDate)</td>
+                        <td>@Model.Posts.FirstOrDefault(d => d.PositionId == staff.PositionId)?.PositionName</td>
+                        <td>@Model.Divisions.FirstOrDefault(d => d.DivisionId == staff.DivisionId)?.DivisionName</td>
+                    </tr>
+                }
+            </table>
+        }
+
+    </div>
+</div>
+<br>
+<br>
+<div class="text-left"> <p class="lead"><a class="custom-link" asp-controller="Home" asp-action="AddStaff">Добавить нового сотрудника</a></p></div>
+

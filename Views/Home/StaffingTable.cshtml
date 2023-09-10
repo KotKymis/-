@@ -1,0 +1,58 @@
+﻿@using Packt.Shared
+@model HomeDivisionViewModel
+@{
+    ViewData["Title"] = "Штатное рассписание";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Наименование организации</h1>
+        <p class="lead"></p>
+
+    @if (Model is not null)
+    {
+        <h2>Штатное расписание</h2>
+        <table class="table-bordered">
+            <tr>
+                <th>Наименование подразделения</th>
+                <th>Должность</th>
+                <th>Кол-во штатных единиц</th>
+                <th>Тарифная ставка, руб</th>
+                <th>Коэффициент/Надбавка, руб</th>
+                <th>Всего в месяц</th>
+
+            </tr>
+            @{
+                decimal totalBonusRate = 0;
+            }
+
+                @foreach (var positionGroup in Model.Staffs.OrderBy(s => s.DivisionId).GroupBy(s => s.PositionId))
+                {
+                    var position = Model.Posts.FirstOrDefault(p => p.PositionId == positionGroup.Key);
+                    var totalRate = position?.TariffRate * positionGroup.Count();
+                    var bonusRate = position?.Coefficient + totalRate;
+                    totalBonusRate += bonusRate ?? 0;
+
+                    <tr>
+                    <td> @Model.Divisions.FirstOrDefault(d => d.DivisionId == @Model.Staffs.FirstOrDefault(p => p.PositionId == positionGroup.Key)?.DivisionId)?.DivisionName </td>
+                    <td> @position?.PositionName </td>
+                    <td> @positionGroup.Count() </td>
+                    <td>@string.Format("{0:C}", position?.TariffRate)</td>
+                    <td>@string.Format("{0:C}", position?.Coefficient)</td>
+                    <td>@string.Format("{0:C}", bonusRate)</td>
+                   
+                    </tr> 
+                }
+            <td></td>
+            <td>Итого</td>
+            <td>@Model?.EmployeesCount</td>
+            <td>х</td>
+            <td>х</td>
+            <td>@totalBonusRate.ToString("C")</td>
+    
+        </table>
+    }
+        <form action="@Url.Action("ExportToWord", "Home")" method="POST">
+            <button type="submit" class="btn btn-primary">Экспорт в Word</button>
+        </form>
+</div>
+</div>

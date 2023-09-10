@@ -1,0 +1,53 @@
+﻿@using Packt.Shared
+@model HomeDivisionViewModel
+@{
+    ViewData["Title"] = "Подразделения";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Наименование организации</h1>
+        <p class="lead">
+
+        </p>
+        @if (Model is not null)
+        {
+            <h2>Список подразделений</h2>
+            <table class="table-bordered">
+                <tr>
+                    <th>Код подразделения</th>
+                    <th>Наименование подразделения</th>
+                    <th>Рабочий</th>
+                <th></th>
+                </tr>
+                @foreach (var Division in Model.Divisions)
+                {
+                    <tr>
+                        <td>@Division.DivisionId</td>
+                        <td>@Division.DivisionName</td>
+                        <td width="400" style="line-height: 1.9;">
+                            @foreach (var Staff in Model.Staffs.Where(s => s.DivisionId == Division.DivisionId))
+                                {
+                                <div class="left-column">
+                                    <a asp-controller="Home" asp-action="EmployeeDetail" asp-route-id="@Staff.StaffId"> @Staff.LastName @Staff.FirstName </a>
+                                </div>
+
+                                <div class="right-column">
+                                    @Model.Posts.FirstOrDefault(d => d.PositionId == Staff.PositionId)?.PositionName
+                                </div>
+                                    
+                                    
+                                
+                            }
+                        </td>
+                        <td>
+                            <a asp-controller="Home" asp-action="DeleteDivision" class="custom-link1" asp-route-id="@Division.DivisionId"> Удалить Подразделение </a>
+                        </td>
+  
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
+<br>
+<P class="lead"> @Html.ActionLink("Добавить новое подразделение", "AddDivision", "Home", null, new { @class = "custom-link" })</P>

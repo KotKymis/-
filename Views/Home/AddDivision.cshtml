@@ -1,0 +1,34 @@
+﻿@model AddDivisionViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<h2>Добавление нового подразделения</h2>
+
+@using (Html.BeginForm("AddDivision", "Home", FormMethod.Post))
+{
+
+    <div class="form-group">
+        <label for="DivisionId" class="control-label">Код Подразделения:</label>
+        @Html.TextBoxFor(model => model.DivisionId, new { @class = "form-control",placeholder = "Введите код подразделения" })
+        @Html.ValidationMessageFor(model => model.DivisionId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="DivisionName" class="control-label">Наименование Подразделения:</label>
+        @Html.TextBoxFor(model => model.DivisionName, new { @class = "form-control",placeholder = "Введите наименование подразделения" })
+        @Html.ValidationMessageFor(model => model.DivisionName, "", new { @class = "text-danger" })
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Добавить подразделение</button>
+}
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("form").validate();
+        });
+    </script>
+}

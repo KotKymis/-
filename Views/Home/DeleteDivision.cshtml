@@ -1,0 +1,29 @@
+﻿
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model DeletePositionViewModel
+
+<h2>Удаление Подразделения</h2>
+
+<h4>Внимание! Удаление подразделения невозможно, если в подразделении числятся сотрудники. При удалении подразделения с сотрудниками, придется выполнить миграцию базы данных в ручную.</h4>
+<h5>Каскадное удаление элементов базы данных не возможно, во избежание нарушений первоначальной бизнес логики и потери информации.</h5>
+<h6>Если вам необходимо удалить подразделение, перед этим удалите всех сотрудников, этого подразделения.</h6>
+<h6>Веб-приложение находится в стадии разработки. За помощю обратитесь к разработчику <a href="mailto:dinislam056@yandex.ru">dinislam056@yandex.ru</a></h6>
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>Код специальности</dt>
+        <dd>@Model.Division.DivisionId</dd>
+        <dt>Наименование</dt>
+        <dd>@Model.Division.DivisionName</dd>
+<div/>
+
+    <br>
+    <br>
+    <form method="post">
+            @Html.AntiForgeryToken()
+
+            <button type="submit" formaction="@Url.Action("DeleteDivisionDivision", "Home", new { id = Model.Division.DivisionId})" onclick="return confirm('Вы уверены, что хотите удалить подразделение?')" class="btn btn-danger">
+            Удалить
+        </button>
+    </form>

@@ -1,0 +1,62 @@
+﻿
+@model EmployeeDetailViewModel
+@{
+    ViewData["Title"] = "Product Detail - ";
+}
+
+<h2>Дополнительная информация о сотруднике</h2>
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>Код сотрудника</dt>
+        <dd>@Model.Staff.StaffId</dd>
+        <dt>Фотография</dt>
+        <dd>
+            @if (Model.Staff.Photo != null)
+            {
+            <img src="data:image;base64,@(Convert.ToBase64String(Model.Staff.Photo))" />
+            }
+            else
+            {
+                <span>Фотография отсутствует.</span>
+            }
+        </dd>
+        <dt>ФИО</dt>
+        <dd>@Model.Staff.LastName @Model.Staff.FirstName @Model.Staff.MiddleName </dd>
+        <dt>Прошло времени с даты найма</dt>
+        <dd>@Model.DaysSinceHiring дня(ей)</dd>
+        <dt>Краткие сведенья</dt>
+        <dd>@Model.Staff.Description</dd>
+        <dt>Номер телефона</dt>
+        <dd>@Model.Staff.PhoneNumber</dd>
+        <dt>Паспортные данные</dt>
+        <dd>@Model.Staff.PassportData</dd>
+        <dt>Дата рождения</dt>
+        <dd>@(Model.Staff.BirthDate.HasValue ? Model.Staff.BirthDate.Value.ToShortDateString() : "")</dd> 
+        <dt>Дата найма в организацию</dt>
+        <dd>@(Model.Staff.HiringDate.HasValue ? Model.Staff.HiringDate.Value.ToShortDateString() : "")</dd>
+        <dt>Документ</dt>
+        <dd>
+            @if (Model.Staff.Document != null)
+            {
+                <a href="@Url.Action("DownloadDocument", "Home", new { id = Model.Staff.StaffId })">Скачать документ</a>
+            }
+            else
+            {
+                <span>Документ Отсутствует</span>
+            }
+        </dd>
+    </dl>
+
+    <a href="@Url.Action("EditEmployee", "Home", new { id = Model.Staff.StaffId })">Редактировать</a>
+    <br>
+    <br>
+    <form method="post">
+        @Html.AntiForgeryToken()
+
+        <button type="submit" formaction="@Url.Action("DeleteEmployee", "Home", new { id = Model.Staff.StaffId })" onclick="return confirm('Вы уверены, что хотите удалить сотрудника?')" class="btn btn-danger">
+            Удалить
+        </button>
+    </form>
+
+</div>

@@ -1,0 +1,49 @@
+﻿@using Packt.Shared;
+@model HomePrivacyViewModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Наименование организации</h1>
+        <p class="lead">
+           
+        </p>
+        @if (Model is not null)
+        {
+            <h2>Список должностей</h2>
+            <table class="table-bordered">
+                <tr>
+                    <th>Код должности(специальность,профессия)</th>
+                    <th>Наименование должности</th>
+                    <th>Работники занимающие должность</th>
+                    <th>Тарифная ставка</th>
+                    <th>Коэффициент/Надбавка</th>
+                    <th></th>
+                </tr>
+                @foreach (var Post in Model.Posts)
+                {
+                    <tr>
+                        <td>@Post.PositionId</td>
+                        <td>@Post.PositionName</td>
+                                <td>
+                            @foreach (var Staff in Model.Staffs.Where(s => s.PositionId == Post.PositionId))
+                            {
+                                    <a asp-controller="Home" asp-action="EmployeeDetail"asp-route-id="@Staff.StaffId"> @Staff.LastName @Staff.FirstName<br /></a>
+                            }
+                        </td>
+                        <td>@Post.TariffRate</td>
+                        <td>@Post.Coefficient</td>
+                        <td>
+                            <a asp-controller="Home" asp-action="DeletePosition" class="custom-link1" asp-route-id="@Post.PositionId"> Удалить должность   </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
+<br>
+
+<p class="lead">@Html.ActionLink("Добавить новую должность", "AddPosition", "Home", null, new { @class = "custom-link" })</p>
+

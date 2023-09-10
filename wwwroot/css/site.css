@@ -1,0 +1,63 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+#product-columns {
+    column-count: 3;
+}
+
+.table-bordered th {
+    border: 2px solid black;
+    padding: 8px;
+    font-size: 18px; /* Здесь можно указать желаемый размер шрифта */
+    font-family: Arial, sans-serif; /* Здесь можно указать желаемый стиль шрифта и список альтернативных шрифтов */
+    font-weight: bold;
+    text-align: center;
+}
+
+.table-bordered td {
+    border: 2px solid black;
+    padding: 8px;
+    font-size: 14px; /* Здесь можно указать желаемый размер шрифта */
+    font-family: Arial, sans-serif; /* Здесь можно указать желаемый стиль шрифта и список альтернативных шрифтов */
+    font-weight: bold;
+    text-align: center;
+}
+.custom-link {
+    color: darkblue;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.custom-link1 {
+    color: red;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.left-column {
+    float: left;
+    width: 50%;
+}
+
+.right-column {
+    float: right;
+    width: 50%;
+}
+.large-font {
+    font-size: 25px; /* Здесь можно задать желаемый размер шрифта */
+}

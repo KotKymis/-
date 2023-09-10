@@ -1,0 +1,27 @@
+﻿@using Packt.Shared;
+@model HomeIndexViewModel
+
+<table id="employeeTable" class="table-bordered">
+        <tr>
+            <th>ФИО</th>
+            <th>Дата рождения</th>
+            <th>Должность</th>
+            <th>Подразделение</th>
+        </tr>
+    @foreach (var staff in Model.Staffs)
+    {
+                <tr>
+                    <td>
+                        <a asp-controller="Home"
+                       asp-action="EmployeeDetail"
+                       asp-route-id="@staff.StaffId">
+                    @staff.LastName @staff.FirstName @staff.MiddleName
+                        </a>
+                    </td>
+                    <td>@Html.DisplayFor(m => staff.BirthDate)</td>
+                    <td>@Model.Posts.FirstOrDefault(d => d.PositionId == staff.PositionId)?.PositionName</td>
+                    <td>@Model.Divisions.FirstOrDefault(d => d.DivisionId == staff.DivisionId)?.DivisionName</td>
+                </tr>
+    }
+    </table>
+}
